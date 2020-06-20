@@ -206,34 +206,24 @@ public class MainActivity extends Activity {
 
 
     public String decrypt(String value,Context c) {
-
         App.Loger("Decrypt Started ...");
-        
         String coded;
         if(value.startsWith("code==")){
             coded = value.substring(6,value.length()).trim();
         }else{
             coded = value.trim();
         }
-
         String result = null;
-
         try {
             // Decoding base64
             byte[] bytesDecoded = Base64.decode(coded.getBytes("UTF-8"),Base64.DEFAULT);
-
             SecretKeySpec key = new SecretKeySpec(keytext.getText().toString().getBytes(), "DES");
-
             Cipher cipher = Cipher.getInstance("DES/ECB/ZeroBytePadding");
-
             // Initialize the cipher for decryption
             cipher.init(Cipher.DECRYPT_MODE, key);
-
             // Decrypt the text
             byte[] textDecrypted = cipher.doFinal(bytesDecoded);
-
             result = new String(textDecrypted);
-
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             App.DialogMaker(c,"Decrypt Error","Erorr:" + "\n" + e.getMessage());
@@ -269,7 +259,6 @@ public class MainActivity extends Activity {
             App.DialogMaker(c,"Decrypt Error","Erorr:" + "\n" + e.getMessage());
             return "Decrypt Error";
         }
-
         App.Loger("Decrypt Finished ...");
         return result;
     }
